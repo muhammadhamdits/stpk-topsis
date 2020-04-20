@@ -21,3 +21,6 @@ Route::post('/alternatif/{alternatif}/destroy', 'AlternatifController@destroy')-
 Route::post('/alternatif/update', 'AlternatifController@update')->name('alternatif.update');
 
 Route::get('/kriteria', 'KriteriaController@index')->name('kriteria.index');
+Route::post('/kriteria', 'KriteriaController@store')->name('kriteria.store');
+Route::post('/kriteria/{kriteria}/destroy', 'KriteriaController@destroy')->name('kriteria.destroy');
+Route::post('/kriteria/update', 'KriteriaController@update')->name('kriteria.update');
