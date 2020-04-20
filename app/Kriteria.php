@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kriteria extends Model
 {
-    protected $fillable = ['nama', 'bobot'];
+    protected $fillable = ['nama', 'bobot', 'jenis'];
 
     public function alternatifKriteria(){
         return $this->hasMany('App\AlternatifKriteria');

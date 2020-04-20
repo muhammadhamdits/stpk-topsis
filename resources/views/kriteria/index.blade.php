@@ -67,8 +67,8 @@
                                                         <button class="btn btn-info btn-sm lihatKategori" data-id="{{ $kriteria->id }}" data-nama="{{ $kriteria->nama }}">
                                                             <i class="fas fa-eye" data-id="{{ $kriteria->id }}" data-nama="{{ $kriteria->nama }}"></i>
                                                         </button>
-                                                        <button class="btn btn-warning btn-sm editKriteria" data-id="{{ $kriteria->id }}" data-nama="{{ $kriteria->nama }}" data-bobot="{{ $kriteria->bobot }}">
-                                                            <i class="fas fa-edit" data-id="{{ $kriteria->id }}" data-nama="{{ $kriteria->nama }}" data-bobot="{{ $kriteria->bobot }}"></i>
+                                                        <button class="btn btn-warning btn-sm editKriteria" data-id="{{ $kriteria->id }}" data-nama="{{ $kriteria->nama }}" data-jenis="{{ $kriteria->jenis }}" data-bobot="{{ $kriteria->bobot }}">
+                                                            <i class="fas fa-edit" data-id="{{ $kriteria->id }}" data-nama="{{ $kriteria->nama }}" data-jenis="{{ $kriteria->jenis }}" data-bobot="{{ $kriteria->bobot }}"></i>
                                                         </button>
                                                         <form action="{{ route('kriteria.destroy', $kriteria) }}" method="post" style="display: inline-block">
                                                             @csrf
@@ -115,6 +115,13 @@
                             <input type="text" name="nama" id="nama" class="form-control" required>
                         </div>
                         <div class="form-group">
+                            <label for="jenis">Jenis Kriteria</label>
+                            <select name="jenis" id="jenis" class="form-control">
+                                <option value="1">Keuntungan</option>
+                                <option value="0">Biaya</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="bobot">Bobot Kriteria</label>
                             <input type="number" name="bobot" id="bobot" class="form-control" required>
                         </div>
@@ -144,6 +151,7 @@
         $("#bobot").val('');
         $("#nama").prop('required',true);
         $("#bobot").prop('required',true);
+        $("#jenis").prop('required',true);
         $("#inputKriteria").show();
         $("#inputKategori").html('');
         $("#modalKriteria").modal();
@@ -152,13 +160,16 @@
         let id = $(e.target).data('id');
         let nama = $(e.target).data('nama');
         let bobot = $(e.target).data('bobot');
+        let jenis = $(e.target).data('jenis');
         $("#modalKriteriaLabel").html('Edit '+nama);
         $("#formKriteria").attr('action', "{{ route('kriteria.update') }}")
         $("#nama").val(nama);
         $("#bobot").val(bobot);
+        $("#jenis").val(jenis);
         $("#id_edit").val(id);
         $("#nama").prop('required',true);
         $("#bobot").prop('required',true);
+        $("#jenis").prop('required',true);
         $("#inputKriteria").show();
         $("#inputKategori").html('');
         $("#modalKriteria").modal();

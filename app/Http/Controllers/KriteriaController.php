@@ -52,6 +52,7 @@ class KriteriaController extends Controller
         $kriteria = Kriteria::findOrFail($request->id_edit);
         $kriteria->nama = $request->nama;
         $kriteria->bobot = $request->bobot;
+        $kriteria->jenis = $request->jenis;
         $kriteria->update();
         
         return redirect(route('kriteria.index'));
