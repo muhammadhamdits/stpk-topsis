@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Alternatif;
+use App\Kriteria;
+use App\AlternatifKriteria;
 use Illuminate\Http\Request;
 
 class AlternatifController extends Controller
@@ -21,6 +23,16 @@ class AlternatifController extends Controller
     public function store(Request $request)
     {
         $alternatif = Alternatif::create($request->all());
+
+        if(count(Kriteria::all()) > 0 && count(Alternatif::all()) > 0){
+            foreach(Kriteria::all() as $kriteria){
+                AlternatifKriteria::create([
+                    'alternatif_id' => $alternatif->id,
+                    'kriteria_id' => $kriteria->id,
+                    'kategori_id' => null,
+                ]);
+            }
+        }
 
         return redirect(route('alternatif.index'));
     }

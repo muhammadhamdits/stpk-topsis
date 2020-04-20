@@ -16,7 +16,7 @@ class CreateAlternatifKriteriasTable extends Migration
         Schema::create('alternatif_kriterias', function (Blueprint $table) {
             $table->bigInteger('alternatif_id')->unsigned();
             $table->bigInteger('kriteria_id')->unsigned();
-            $table->bigInteger('kategori_id')->unsigned();
+            $table->bigInteger('kategori_id')->unsigned()->nullable();
             $table->foreign('alternatif_id')->references('id')->on('alternatifs')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('kriteria_id')->references('id')->on('kriterias')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('kategori_id')->references('id')->on('kategoris')->onDelete('cascade')->onUpdate('cascade');

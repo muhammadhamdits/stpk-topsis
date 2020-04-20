@@ -11,4 +11,8 @@ class Alternatif extends Model
     public function alternatifKriteria(){
         return $this->hasMany('App\AlternatifKriteria');
     }
+
+    public function status(){
+        return $this->hasMany('App\AlternatifKriteria')->where('kategori_id', null);
+    }
 }

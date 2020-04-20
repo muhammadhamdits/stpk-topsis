@@ -51,19 +51,23 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td class="text-left">{{ $alternatif->nama }}</td>
                                                     <td>
+                                                        @if(count($alternatif->status) == 0)
                                                         <span class="badge badge-success">
                                                             <i class="fas fa-check"></i>
                                                         </span>
+                                                        @elseif(count($alternatif->status) < count($alternatif->alternatifKriteria))
                                                         <span class="badge badge-warning">
                                                             <i class="fas fa-exclamation-triangle"></i>
                                                         </span>
+                                                        @else
                                                         <span class="badge badge-danger">
                                                             <i class="fas fa-exclamation-triangle"></i>
                                                         </span>
+                                                        @endif
                                                     </td>
                                                     <td>
-                                                        <button class="btn btn-info btn-sm">
-                                                            <i class="fas fa-eye"></i>
+                                                        <button class="btn btn-info btn-sm detailAlternatif" data-id="{{ $alternatif->id }}">
+                                                            <i class="fas fa-eye" data-id="{{ $alternatif->id }}"></i>
                                                         </button>
                                                         <button class="btn btn-warning btn-sm editAlternatif" data-id="{{ $alternatif->id }}" data-nama="{{ $alternatif->nama }}">
                                                             <i class="fas fa-edit" data-id="{{ $alternatif->id }}" data-nama="{{ $alternatif->nama }}"></i>
@@ -108,7 +112,7 @@
                 <div class="modal-body">
                     <label for="nama">Nama Alternatif</label>
                     <input type="hidden" name="id_edit" id="id_edit">
-                    <input type="text" name="nama" id="nama" class="form-control">
+                    <input type="text" name="nama" id="nama" class="form-control" required>
                 </div>
                 
                 <div class="modal-footer">
@@ -138,6 +142,17 @@
         $("#nama").val(nama);
         $("#id_edit").val(id);
         $("#modalAlternatif").modal();
+    });
+    $(".detailAlternatif").click(function(e){
+        let id = $(e.target).data('id');
+        $.ajax({
+            type: 'GET',
+            url: "{{ route('kategori.index') }}"+"/"+id,
+            success: function(data) {
+                $("#inputKategori").html(data);
+                $("#modalKriteria").modal();
+            }
+        });
     });
 </script>
 @endsection
