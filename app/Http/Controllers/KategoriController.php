@@ -18,11 +18,14 @@ class KategoriController extends Controller
             foreach($kriteria->kategori as $kategori){
                 $content .=
                 "<tr>".
-                    "<td width='75%'>".
+                    "<td width='60%'>".
                         "<input type='text' name='kategoris[]' value='$kategori->nama' class='form-control' required>".
                     "</td>".
-                    "<td width='25%'>".
+                    "<td width='30%'>".
                         "<input type='number' name='nilais[]' value='$kategori->nilai' class='form-control' required>".
+                    "</td>".
+                    "<td width='10%'>".
+                        "<a onclick='return confirm(\"Yakin menghapus data ini?\")' class='btn btn-danger text-white' href='".route('kategori.destroy', $kategori)."'><i class='fas fa-trash'></i></a>".
                     "</td>".
                 "</tr>";
             }
@@ -78,9 +81,11 @@ class KategoriController extends Controller
         
         return redirect(route('kriteria.index'));
     }
-
+    
     public function destroy(Kategori $kategori)
     {
-        //
+        $kategori->delete();
+        
+        return redirect(route('kriteria.index'));
     }
 }
