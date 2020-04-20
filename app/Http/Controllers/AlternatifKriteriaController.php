@@ -3,81 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\AlternatifKriteria;
+use App\Alternatif;
+use DB;
 use Illuminate\Http\Request;
 
 class AlternatifKriteriaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index($id)
     {
-        //
+        $content = "";
+        foreach(Alternatif::findOrFail($id)->alternatifKriteria as $ak){
+            $content .=
+            "<div class='form-group'>".
+                "<label for='$ak->kriteria_id'>".$ak->kriteria->nama."</label>".
+                "<select name='kriteria[$ak->kriteria_id]' class='form-control' required>".
+                    "<option value='' selected disabled>Pilih Kategori</option>";
+                    foreach($ak->kriteria->kategori as $k){
+                        $content .=
+                        "<option value='$k->id'";
+                        if($k->id == $ak->kategori_id){
+                            $content .= " selected ";
+                        }
+                        $content .=
+                        ">$k->nama</option>";
+                    }
+            $content .=
+                "</select>".
+            "</div>";
+        }
+        echo($content);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\AlternatifKriteria  $alternatifKriteria
-     * @return \Illuminate\Http\Response
-     */
     public function show(AlternatifKriteria $alternatifKriteria)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\AlternatifKriteria  $alternatifKriteria
-     * @return \Illuminate\Http\Response
-     */
     public function edit(AlternatifKriteria $alternatifKriteria)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\AlternatifKriteria  $alternatifKriteria
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, AlternatifKriteria $alternatifKriteria)
+    public function update(Request $request)
     {
-        //
+        foreach ($request->kriteria as $key => $value) {
+            DB::update('update alternatif_kriterias set kategori_id = ? where alternatif_id = ? and kriteria_id = ?', [$value, $request->id_edit, $key]);
+        }
+
+        return redirect(route('alternatif.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\AlternatifKriteria  $alternatifKriteria
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(AlternatifKriteria $alternatifKriteria)
     {
         //

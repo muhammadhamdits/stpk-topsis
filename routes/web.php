@@ -28,3 +28,6 @@ Route::post('/kriteria/update', 'KriteriaController@update')->name('kriteria.upd
 Route::get('/kategori/{id?}', 'KategoriController@index')->name('kategori.index');
 Route::post('/kategori/update', 'KategoriController@update')->name('kategori.update');
 Route::get('/kategori/delete/{kategori}', 'KategoriController@destroy')->name('kategori.destroy');
+
+Route::get('/alternatifKriteria/{id?}', 'AlternatifKriteriaController@index')->name('alternatifKriteria.index');
+Route::post('/alternatifKriteria', 'AlternatifKriteriaController@update')->name('alternatifKriteria.update');

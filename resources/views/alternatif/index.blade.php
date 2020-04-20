@@ -110,9 +110,14 @@
                 </div>
 
                 <div class="modal-body">
-                    <label for="nama">Nama Alternatif</label>
-                    <input type="hidden" name="id_edit" id="id_edit">
-                    <input type="text" name="nama" id="nama" class="form-control" required>
+                    <div id="inputAlternatif">
+                        <label for="nama">Nama Alternatif</label>
+                        <input type="hidden" name="id_edit" id="id_edit">
+                        <input type="text" name="nama" id="nama" class="form-control" required>
+                    </div>
+                    <div id="inputDetail">
+                        
+                    </div>
                 </div>
                 
                 <div class="modal-footer">
@@ -132,6 +137,9 @@
         $("#modalAlternatifLabel").html('Tambah Alternatif');
         $("#formAlternatif").attr('action', "{{ route('alternatif.store') }}")
         $("#nama").val('');
+        $("#nama").prop('required', true);
+        $("#inputAlternatif").show();
+        $("#inputDetail").html('');
         $("#modalAlternatif").modal();
     });
     $(".editAlternatif").click(function(e){
@@ -141,16 +149,23 @@
         $("#formAlternatif").attr('action', "{{ route('alternatif.update') }}")
         $("#nama").val(nama);
         $("#id_edit").val(id);
+        $("#nama").prop('required', true);
+        $("#inputAlternatif").show();
+        $("#inputDetail").html('');
         $("#modalAlternatif").modal();
     });
     $(".detailAlternatif").click(function(e){
         let id = $(e.target).data('id');
+        $("#id_edit").val(id);
+        $("#nama").prop('required', false);
+        $("#inputAlternatif").hide();
+        $("#formAlternatif").attr('action', "{{ route('alternatifKriteria.update') }}")
         $.ajax({
             type: 'GET',
-            url: "{{ route('kategori.index') }}"+"/"+id,
+            url: "{{ route('alternatifKriteria.index') }}"+"/"+id,
             success: function(data) {
-                $("#inputKategori").html(data);
-                $("#modalKriteria").modal();
+                $("#inputDetail").html(data);
+                $("#modalAlternatif").modal();
             }
         });
     });
