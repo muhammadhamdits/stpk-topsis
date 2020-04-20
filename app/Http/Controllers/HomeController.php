@@ -16,6 +16,9 @@ class HomeController extends Controller
         $status = true;
         $v = [];
 
+        if(count(Kriteria::all()) == 0 || count(Alternatif::all()) == 0){
+            $status = false;
+        }
         foreach(Kriteria::all() as $k){
             foreach($k->alternatifKriteria as $ak){
                 if($ak->kategori_id == null){

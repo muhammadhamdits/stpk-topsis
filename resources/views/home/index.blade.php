@@ -78,7 +78,7 @@
 
                 <div class="card-body">
                     <div class="tab-content p-0">
-                        <div class="chart tab-pane active" id="chart" style="position: relative; height: 300px;">
+                        <div class="chart tab-pane active text-center" id="chart" style="position: relative; height: 300px;">
                             @if($status == true)
                             <canvas id="chart-canvas" height="300" style="height: 300px;">
                             </canvas>                         
