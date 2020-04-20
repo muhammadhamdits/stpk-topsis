@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home.index');
-});
+Route::get('/', 'HomeController@index')->name('home.index');
+
+Route::get('/alternatif', 'AlternatifController@index')->name('alternatif.index');
+Route::post('/alternatif', 'AlternatifController@store')->name('alternatif.store');
+Route::post('/alternatif/{alternatif}/destroy', 'AlternatifController@destroy')->name('alternatif.destroy');
+Route::post('/alternatif/update', 'AlternatifController@update')->name('alternatif.update');
+
+Route::get('/kriteria', 'KriteriaController@index')->name('kriteria.index');

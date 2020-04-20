@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="{{ url('css/summernote-bs4.css') }}">
         <!-- <link rel="stylesheet" href="{{ url('css/css.css') }}"> -->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{ url('css/datatables.min.css') }}"/>
     <!-- CSS -->
 </head>
 
@@ -48,7 +49,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+            <a href="{{ route('home.index') }}" class="brand-link">
                 <span class="brand-text font-weight-light">STPK TOPSIS</span>
             </a>
 
@@ -57,11 +58,26 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
+                            <a href="{{ route('home.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-home"></i>
+                                <p>
+                                    Dashboard
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('alternatif.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-tasks"></i>
+                                <p>
+                                    Alternatif
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('kriteria.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
-                                    Widgets
-                                    <span class="right badge badge-danger">New</span>
+                                    Kriteria
                                 </p>
                             </a>
                         </li>
@@ -96,6 +112,9 @@
         </aside>
     </div>
 
+    <!-- Modal -->
+    @yield('modal')
+
     <!-- Script -->
         <script src="{{ url('js/jquery.min.js') }}"></script>
         <script src="{{ url('js/jquery-ui.min.js') }}"></script>
@@ -113,6 +132,7 @@
         <script src="{{ url('js/jquery.overlayScrollbars.min.js') }}"></script>
         <script src="{{ url('js/adminlte.js') }}"></script>
         <script src="{{ url('js/dashboard.js') }}"></script>
+        <script src="{{ url('js/datatables.min.js') }}"></script>
         @yield('js')
     <!-- Script -->
 </body>

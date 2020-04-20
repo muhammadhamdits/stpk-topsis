@@ -7,79 +7,47 @@ use Illuminate\Http\Request;
 
 class AlternatifController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $alternatifs = Alternatif::all();
+        return view('alternatif.index', compact('alternatifs'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $alternatif = Alternatif::create($request->all());
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Alternatif  $alternatif
-     * @return \Illuminate\Http\Response
-     */
+        return redirect(route('alternatif.index'));
+    }
+    
     public function show(Alternatif $alternatif)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Alternatif  $alternatif
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit(Alternatif $alternatif)
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Alternatif  $alternatif
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Alternatif $alternatif)
+    
+    public function update(Request $request)
     {
-        //
+        $alternatif = Alternatif::findOrFail($request->id_edit);
+        $alternatif->nama = $request->nama;
+        $alternatif->update();
+        
+        return redirect(route('alternatif.index'));
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Alternatif  $alternatif
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy(Alternatif $alternatif)
     {
-        //
+        $alternatif->delete();
+
+        return redirect(route('alternatif.index'));
     }
 }
