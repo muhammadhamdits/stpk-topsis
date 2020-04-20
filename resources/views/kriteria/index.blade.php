@@ -41,7 +41,8 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th class="text-left">Nama Kriteria</th>
-                                                <th class="text-left">Bobot</th>
+                                                <th>Bobot</th>
+                                                <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -50,10 +51,21 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td class="text-left">{{ $kriteria->nama }}</td>
-                                                    <td class="text-left">{{ $kriteria->bobot }}</td>
+                                                    <td>{{ $kriteria->bobot }}</td>
                                                     <td>
-                                                        <button class="btn btn-info btn-sm">
-                                                            <i class="fas fa-eye"></i>
+                                                        @if(count($kriteria->kategori) > 0)
+                                                        <span class="badge badge-success">
+                                                            <i class="fas fa-check"></i>
+                                                        </span>
+                                                        @else
+                                                        <span class="badge badge-danger">
+                                                            <i class="fas fa-exclamation-triangle"></i>
+                                                        </span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-info btn-sm lihatKategori" data-id="{{ $kriteria->id }}" data-nama="{{ $kriteria->nama }}">
+                                                            <i class="fas fa-eye" data-id="{{ $kriteria->id }}" data-nama="{{ $kriteria->nama }}"></i>
                                                         </button>
                                                         <button class="btn btn-warning btn-sm editKriteria" data-id="{{ $kriteria->id }}" data-nama="{{ $kriteria->nama }}" data-bobot="{{ $kriteria->bobot }}">
                                                             <i class="fas fa-edit" data-id="{{ $kriteria->id }}" data-nama="{{ $kriteria->nama }}" data-bobot="{{ $kriteria->bobot }}"></i>
@@ -82,7 +94,7 @@
 @endsection
 
 @section('modal')
-<!-- Modal Tambah -->
+<!-- Modal Kriteria -->
 <div class="modal fade" id="modalKriteria" tabindex="-1" role="dialog" aria-labelledby="modalKriteriaLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -96,14 +108,19 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="nama">Nama Kriteria</label>
-                        <input type="hidden" name="id_edit" id="id_edit">
-                        <input type="text" name="nama" id="nama" class="form-control">
+                    <div id="inputKriteria">
+                        <div class="form-group">
+                            <label for="nama">Nama Kriteria</label>
+                            <input type="hidden" name="id_edit" id="id_edit">
+                            <input type="text" name="nama" id="nama" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bobot">Bobot Kriteria</label>
+                            <input type="number" name="bobot" id="bobot" class="form-control" required>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="bobot">Bobot Kriteria</label>
-                        <input type="number" name="bobot" id="bobot" class="form-control">
+                    <div id="inputKategori">
+                        
                     </div>
                 </div>
                 
@@ -125,6 +142,10 @@
         $("#formKriteria").attr('action', "{{ route('kriteria.store') }}")
         $("#nama").val('');
         $("#bobot").val('');
+        $("#nama").prop('required',true);
+        $("#bobot").prop('required',true);
+        $("#inputKriteria").show();
+        $("#inputKategori").html('');
         $("#modalKriteria").modal();
     });
     $(".editKriteria").click(function(e){
@@ -136,7 +157,45 @@
         $("#nama").val(nama);
         $("#bobot").val(bobot);
         $("#id_edit").val(id);
+        $("#nama").prop('required',true);
+        $("#bobot").prop('required',true);
+        $("#inputKriteria").show();
+        $("#inputKategori").html('');
         $("#modalKriteria").modal();
     });
+    $(".lihatKategori").click(function(e){
+        let id = $(e.target).data('id');
+        let nama = $(e.target).data('nama');
+        $("#id_edit").val(id);
+        $("#nama").prop('required',false);
+        $("#bobot").prop('required',false);
+        $("#modalKriteriaLabel").html('Kategori '+nama);
+        $("#formKriteria").attr('action', "{{ route('kategori.update') }}")
+        $("#inputKriteria").hide();
+        $.ajax({
+            type: 'GET',
+            url: "{{ route('kategori.index') }}"+"/"+id,
+            success: function(data) {
+                $("#inputKategori").html(data);
+                $("#modalKriteria").modal();
+            }
+        });
+    });
+    function tambahKategori(e){
+        e.preventDefault;
+        if($("#none")){
+            $("#none").remove();
+        }
+        let content = 
+        "<tr>"+
+            "<td width='75%'>"+
+                "<input placeholder='Nama Kategori' type='text' name='kategori[]' class='form-control' required>"+
+            "</td>"+
+            "<td width='25%'>"+
+                "<input placeholder='Nilai' type='number' name='nilai[]' class='form-control' required>"+
+            "</td>"+
+        "</tr>";
+        $("#tabelKategori").append(content);
+    }
 </script>
 @endsection

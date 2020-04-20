@@ -92,7 +92,7 @@
 @endsection
 
 @section('modal')
-<!-- Modal Tambah -->
+<!-- Modal Alternatif -->
 <div class="modal fade" id="modalAlternatif" tabindex="-1" role="dialog" aria-labelledby="modalAlternatifLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

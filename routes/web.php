@@ -24,3 +24,6 @@ Route::get('/kriteria', 'KriteriaController@index')->name('kriteria.index');
 Route::post('/kriteria', 'KriteriaController@store')->name('kriteria.store');
 Route::post('/kriteria/{kriteria}/destroy', 'KriteriaController@destroy')->name('kriteria.destroy');
 Route::post('/kriteria/update', 'KriteriaController@update')->name('kriteria.update');
+
+Route::get('/kategori/{id?}', 'KategoriController@index')->name('kategori.index');
+Route::post('/kategori/update', 'KategoriController@update')->name('kategori.update');
